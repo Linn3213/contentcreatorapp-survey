@@ -201,7 +201,21 @@ const ContentSurvey = () => {
     if (currentStep < questions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      setShowThankYou(true);
+      // Last question - redirect directly to GHL form
+      const params = new URLSearchParams({
+        platforms: answers.platforms?.join(', ') || '',
+        frequency: answers.frequency || '',
+        biggest_challenge: answers.biggest_challenge || '',
+        current_tools: answers.current_tools?.join(', ') || '',
+        missing_features: answers.missing_features?.join(', ') || '',
+        top_3_features: answers.most_valuable?.join(', ') || '',
+        price_willing: answers.price_willing || '',
+        content_type: answers.content_type?.join(', ') || '',
+        goal: answers.goal || '',
+        open_feedback: answers.open_feedback || ''
+      });
+      
+      window.location.href = `https://links.hereis.se/widget/form/PxLuonGgDYQcEzsNwF8Y?${params.toString()}`;
     }
   };
 
@@ -265,7 +279,7 @@ const ContentSurvey = () => {
 
   const headingStyle = {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    color: '#4A4039',
+    color: '#2D2621',
     letterSpacing: '0.03em'
   };
 
@@ -283,7 +297,7 @@ const ContentSurvey = () => {
 
   const labelStyle = {
     margin: '0 16px',
-    color: 'rgba(139, 115, 94, 0.7)',
+    color: '#4A3F37',
     fontSize: '0.7rem',
     letterSpacing: '0.3em',
     textTransform: 'uppercase'
@@ -311,7 +325,7 @@ const ContentSurvey = () => {
             fontSize: '2.8rem', 
             fontWeight: '300', 
             marginBottom: '32px',
-            background: 'linear-gradient(135deg, #8B735E 0%, #A69080 50%, #8B735E 100%)',
+            background: 'linear-gradient(135deg, #6B5A4D 0%, #A69080 50%, #6B5A4D 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             letterSpacing: '0.05em'
@@ -319,11 +333,11 @@ const ContentSurvey = () => {
             Från Dig
           </h2>
 
-          <p style={{ fontSize: '0.95rem', marginBottom: '24px', maxWidth: '24rem', marginLeft: 'auto', marginRight: 'auto', lineHeight: '1.8', color: '#7A6E63' }}>
+          <p style={{ fontSize: '0.95rem', marginBottom: '24px', maxWidth: '24rem', marginLeft: 'auto', marginRight: 'auto', lineHeight: '1.8', color: '#2D2621' }}>
             Vi bygger något som ska göra det enklare att skapa och dela det du brinner för.
           </p>
 
-          <p style={{ fontSize: '0.85rem', marginBottom: '48px', color: '#9A8E83', fontStyle: 'italic' }}>
+          <p style={{ fontSize: '0.85rem', marginBottom: '48px', color: '#2D2621', fontStyle: 'italic' }}>
             Dina svar hjälper oss forma det till något som verkligen passar dig.
           </p>
 
@@ -332,7 +346,7 @@ const ContentSurvey = () => {
             style={{
               background: 'transparent',
               border: '1px solid rgba(139, 115, 94, 0.4)',
-              color: '#8B735E',
+              color: '#6B5A4D',
               padding: '16px 48px',
               fontSize: '0.75rem',
               letterSpacing: '0.2em',
@@ -352,141 +366,8 @@ const ContentSurvey = () => {
             Jag Vill Vara Med
           </button>
 
-          <p style={{ marginTop: '32px', fontSize: '0.75rem', color: '#A89E93', letterSpacing: '0.1em' }}>
+          <p style={{ marginTop: '32px', fontSize: '0.75rem', color: '#4A3F37', letterSpacing: '0.1em' }}>
             Cirka 3 minuter
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // ============================================
-  // EMAIL CAPTURE
-  // ============================================
-  if (showThankYou === true) {
-    return (
-      <div style={pageStyle}>
-        <div style={{ ...containerStyle, maxWidth: '28rem' }}>
-          
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '40px' }}>
-            <div style={decorLineLeft}></div>
-            <div style={labelStyle}>Ditt Resultat Väntar</div>
-            <div style={decorLineRight}></div>
-          </div>
-
-          <h2 style={{ ...headingStyle, fontSize: '2rem', fontWeight: '300', marginBottom: '16px' }}>
-            Ett Steg Kvar
-          </h2>
-          
-          <p style={{ fontSize: '0.9rem', marginBottom: '40px', maxWidth: '20rem', marginLeft: 'auto', marginRight: 'auto', color: '#7A6E63', lineHeight: '1.8' }}>
-            Ange din e-post för att säkra din plats som early supporter och få exklusiv tidig tillgång.
-          </p>
-
-          <form onSubmit={(e) => { e.preventDefault(); if (email) handleSubmit(); }}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="din@email.se"
-              required
-              style={{
-                width: '100%',
-                padding: '16px 24px',
-                textAlign: 'center',
-                background: 'rgba(255, 255, 255, 0.6)',
-                border: '1px solid rgba(139, 115, 94, 0.25)',
-                color: '#4A4039',
-                fontSize: '0.9rem',
-                letterSpacing: '0.05em',
-                marginBottom: '16px',
-                outline: 'none',
-                transition: 'all 0.3s ease'
-              }}
-              onFocus={(e) => e.currentTarget.style.borderColor = 'rgba(139, 115, 94, 0.5)'}
-              onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(139, 115, 94, 0.25)'}
-            />
-            <button
-              type="submit"
-              style={{
-                width: '100%',
-                padding: '16px',
-                background: 'linear-gradient(135deg, #8B735E 0%, #A69080 100%)',
-                border: 'none',
-                color: '#FFFFFF',
-                fontSize: '0.75rem',
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                fontWeight: '500',
-                cursor: 'pointer',
-                opacity: email ? 1 : 0.6
-              }}
-            >
-              Säkra Min Plats
-            </button>
-          </form>
-
-          <p style={{ marginTop: '24px', fontSize: '0.7rem', color: '#A89E93', letterSpacing: '0.05em' }}>
-            Vi delar aldrig din e-post med någon annan
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // ============================================
-  // THANK YOU COMPLETE
-  // ============================================
-  if (showThankYou === 'complete') {
-    return (
-      <div style={pageStyle}>
-        <div style={{ ...containerStyle, maxWidth: '28rem' }}>
-          
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '40px' }}>
-            <div style={decorLineLeft}></div>
-            <div style={labelStyle}>Välkommen</div>
-            <div style={decorLineRight}></div>
-          </div>
-          
-          <h2 style={{ 
-            ...headingStyle, 
-            fontSize: '2rem', 
-            fontWeight: '300', 
-            marginBottom: '16px',
-            background: 'linear-gradient(135deg, #8B735E 0%, #A69080 50%, #8B735E 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
-            Du Är Med
-          </h2>
-          
-          <p style={{ fontSize: '0.9rem', marginBottom: '32px', color: '#7A6E63', lineHeight: '1.8' }}>
-            Tack för att du delade dina tankar. Din feedback formar det vi bygger.
-          </p>
-
-          <div style={{
-            background: 'rgba(139, 115, 94, 0.06)',
-            border: '1px solid rgba(139, 115, 94, 0.15)',
-            padding: '32px',
-            textAlign: 'center'
-          }}>
-            <p style={{ color: '#8B735E', fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '16px' }}>
-              Som Early Supporter Får Du
-            </p>
-            <div style={{ textAlign: 'left', maxWidth: '16rem', margin: '0 auto' }}>
-              <p style={{ color: '#5C5248', fontSize: '0.85rem', lineHeight: '2', marginBottom: '8px' }}>
-                Tidig tillgång innan alla andra
-              </p>
-              <p style={{ color: '#5C5248', fontSize: '0.85rem', lineHeight: '2', marginBottom: '8px' }}>
-                Exklusivt pris vid lansering
-              </p>
-              <p style={{ color: '#5C5248', fontSize: '0.85rem', lineHeight: '2' }}>
-                Möjlighet att påverka utvecklingen
-              </p>
-            </div>
-          </div>
-
-          <p style={{ marginTop: '32px', fontSize: '0.75rem', color: '#A89E93', letterSpacing: '0.1em' }}>
-            Håll utkik i din inbox
           </p>
         </div>
       </div>
@@ -503,10 +384,10 @@ const ContentSurvey = () => {
         {/* Progress */}
         <div style={{ marginBottom: '48px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#A89E93', letterSpacing: '0.15em' }}>
+            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#5C4D42', letterSpacing: '0.15em' }}>
               Fråga {currentStep + 1} av {questions.length}
             </span>
-            <span style={{ fontSize: '0.75rem', color: '#8B735E', letterSpacing: '0.1em' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6B5A4D', letterSpacing: '0.1em' }}>
               {Math.round(progress)}%
             </span>
           </div>
@@ -515,7 +396,7 @@ const ContentSurvey = () => {
               style={{ 
                 height: '100%', 
                 width: `${progress}%`, 
-                background: 'linear-gradient(90deg, #8B735E, #A69080)',
+                background: 'linear-gradient(90deg, #6B5A4D, #A69080)',
                 transition: 'width 0.5s ease'
               }}
             />
@@ -527,7 +408,7 @@ const ContentSurvey = () => {
           <h2 style={{ ...headingStyle, fontSize: '1.5rem', fontWeight: '300', marginBottom: '12px', lineHeight: '1.4' }}>
             {question.question}
           </h2>
-          <p style={{ fontSize: '0.8rem', color: '#9A8E83', letterSpacing: '0.05em' }}>
+          <p style={{ fontSize: '0.8rem', color: '#2D2621', letterSpacing: '0.05em' }}>
             {question.subtitle}
           </p>
         </div>
@@ -556,11 +437,11 @@ const ContentSurvey = () => {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  <span style={{ display: 'block', fontSize: '0.9rem', marginBottom: '4px', color: '#4A4039' }}>
+                  <span style={{ display: 'block', fontSize: '0.9rem', marginBottom: '4px', color: '#2D2621' }}>
                     {option.label}
                   </span>
                   {option.description && (
-                    <span style={{ display: 'block', fontSize: '0.75rem', color: '#9A8E83' }}>
+                    <span style={{ display: 'block', fontSize: '0.75rem', color: '#2D2621' }}>
                       {option.description}
                     </span>
                   )}
@@ -591,7 +472,7 @@ const ContentSurvey = () => {
                       transition: 'all 0.3s ease'
                     }}
                   >
-                    <span style={{ fontSize: '0.85rem', color: isSelected ? '#8B735E' : '#5C5248' }}>
+                    <span style={{ fontSize: '0.85rem', color: isSelected ? '#6B5A4D' : '#3D352F' }}>
                       {option.label}
                     </span>
                   </button>
@@ -634,20 +515,20 @@ const ContentSurvey = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      background: isSelected ? '#8B735E' : 'rgba(139, 115, 94, 0.15)',
-                      color: isSelected ? '#FFFFFF' : '#A89E93',
+                      background: isSelected ? '#6B5A4D' : 'rgba(139, 115, 94, 0.15)',
+                      color: isSelected ? '#FFFFFF' : '#4A3F37',
                       fontSize: '0.8rem',
                       fontWeight: '500'
                     }}>
                       {isSelected ? rankIndex + 1 : ''}
                     </span>
-                    <span style={{ fontSize: '0.9rem', color: isSelected ? '#8B735E' : '#5C5248' }}>
+                    <span style={{ fontSize: '0.9rem', color: isSelected ? '#6B5A4D' : '#3D352F' }}>
                       {option.label}
                     </span>
                   </button>
                 );
               })}
-              <p style={{ fontSize: '0.75rem', color: '#A89E93', marginTop: '8px', textAlign: 'center' }}>
+              <p style={{ fontSize: '0.75rem', color: '#4A3F37', marginTop: '8px', textAlign: 'center' }}>
                 {currentAnswer?.length || 0} av 3 valda
               </p>
             </div>
@@ -665,7 +546,7 @@ const ContentSurvey = () => {
                 padding: '20px',
                 background: 'rgba(255, 255, 255, 0.6)',
                 border: '1px solid rgba(139, 115, 94, 0.2)',
-                color: '#4A4039',
+                color: '#2D2621',
                 fontSize: '0.9rem',
                 lineHeight: '1.7',
                 resize: 'vertical',
@@ -686,7 +567,7 @@ const ContentSurvey = () => {
             style={{
               background: 'none',
               border: 'none',
-              color: currentStep > 0 ? '#9A8E83' : 'transparent',
+              color: currentStep > 0 ? '#3D352F' : 'transparent',
               fontSize: '0.8rem',
               cursor: currentStep > 0 ? 'pointer' : 'default',
               letterSpacing: '0.05em'
@@ -706,7 +587,7 @@ const ContentSurvey = () => {
                 border: canProceed() || question.type === 'text'
                   ? '1px solid rgba(139, 115, 94, 0.4)'
                   : '1px solid rgba(139, 115, 94, 0.15)',
-                color: canProceed() || question.type === 'text' ? '#8B735E' : '#A89E93',
+                color: canProceed() || question.type === 'text' ? '#6B5A4D' : '#4A3F37',
                 padding: '12px 32px',
                 fontSize: '0.75rem',
                 letterSpacing: '0.15em',
