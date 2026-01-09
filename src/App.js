@@ -8,10 +8,8 @@ const ContentSurvey = () => {
   const [started, setStarted] = useState(false);
   const [email, setEmail] = useState('');
 
-  // ============================================
-  // WEBHOOK URL - Byt ut mot din GHL webhook
-  // ============================================
-  const WEBHOOK_URL = 'YOUR_GHL_WEBHOOK_URL_HERE';
+  // GHL Form URL for data collection
+  const GHL_FORM_URL = 'https://links.hereis.se/widget/form/PxLuonGgDYQcEzsNwF8Y';
 
   const questions = [
     {
@@ -213,36 +211,24 @@ const ContentSurvey = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (WEBHOOK_URL && WEBHOOK_URL !== 'YOUR_GHL_WEBHOOK_URL_HERE') {
-      try {
-        await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: email,
-            survey_type: 'contalier_research',
-            timestamp: new Date().toISOString(),
-            platforms: answers.platforms?.join(', ') || '',
-            frequency: answers.frequency || '',
-            biggest_challenge: answers.biggest_challenge || '',
-            current_tools: answers.current_tools?.join(', ') || '',
-            missing_features: answers.missing_features?.join(', ') || '',
-            top_3_features: answers.most_valuable?.join(', ') || '',
-            price_willing: answers.price_willing || '',
-            content_type: answers.content_type?.join(', ') || '',
-            goal: answers.goal || '',
-            open_feedback: answers.open_feedback || '',
-            tags: 'survey-completed,contalier-interest'
-          })
-        });
-      } catch (error) {
-        console.error('Webhook error:', error);
-      }
-    }
+  const handleSubmit = () => {
+    // Build URL parameters with all survey data
+    const params = new URLSearchParams({
+      email: email,
+      platforms: answers.platforms?.join(', ') || '',
+      frequency: answers.frequency || '',
+      biggest_challenge: answers.biggest_challenge || '',
+      current_tools: answers.current_tools?.join(', ') || '',
+      missing_features: answers.missing_features?.join(', ') || '',
+      top_3_features: answers.most_valuable?.join(', ') || '',
+      price_willing: answers.price_willing || '',
+      content_type: answers.content_type?.join(', ') || '',
+      goal: answers.goal || '',
+      open_feedback: answers.open_feedback || ''
+    });
     
-    console.log('Survey submitted:', { email, answers });
-    setShowThankYou('complete');
+    // Redirect to GHL form with data
+    window.location.href = `https://links.hereis.se/widget/form/PxLuonGgDYQcEzsNwF8Y?${params.toString()}`;
   };
 
   const question = questions[currentStep];
